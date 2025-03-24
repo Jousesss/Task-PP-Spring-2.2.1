@@ -28,10 +28,11 @@ public class CarDaoImpl implements CarDao {
 
     @Override
     public Optional<Car> findByModelAndSeries(String model, int series) {
-        Car carToReturn = null;
         Query<Car> queryHQL = sessionFactory.getCurrentSession().createQuery(FIND_BY_MODEL_AND_SERIES_QUERY, Car.class);
         queryHQL.setParameter("model", model);
         queryHQL.setParameter("series", series);
+
+        Car carToReturn = null;
         try {
             carToReturn = queryHQL.getSingleResult();
         } catch (Exception e) {

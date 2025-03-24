@@ -23,8 +23,11 @@ import java.util.Properties;
 @ComponentScan(value = "hiber")
 public class AppConfig {
 
-   @Autowired
-   private Environment env;
+   private final Environment env;
+
+   public AppConfig(Environment env) {
+      this.env = env;
+   }
 
    @Bean
    public DataSource getDataSource() {
@@ -43,6 +46,8 @@ public class AppConfig {
       
       Properties properties = new Properties();
       properties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+      properties.put("hibernate.format_sql", env.getProperty("hibernate.format_sql"));
+      properties.put("hibernate.highlight_sql", env.getProperty("hibernate.highlight_sql"));
       properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
 
       factoryBean.setHibernateProperties(properties);
